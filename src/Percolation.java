@@ -69,12 +69,18 @@ public class Percolation {
     
     int cellId = xyTo1d(x, y);
     
-    
+    // if the row = 1 
+    // connect to the topVirtualSite
     if (x - 1 == 0) {
       cells.union(topVirtualSite, cellId);
     }
     if (x + 1 > gridSize) {
-      cells.union(bottomVirtualSite, cellId);
+      // backwash problem emerges if we connect all of them to the lower
+      // if it's connected to the topVirtualSite i.e. isFull
+      // only in that cases connect it to the bottomVirtualSite
+      if (isFull(x, y)) {
+        cells.union(bottomVirtualSite, cellId);
+      }
     }
     
     // checking the neighbor sites if they are open
